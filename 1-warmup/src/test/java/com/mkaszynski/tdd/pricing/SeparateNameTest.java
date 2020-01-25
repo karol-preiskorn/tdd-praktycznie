@@ -10,7 +10,9 @@ class SeparateNameTest {
     @ParameterizedTest
     @CsvSource({"name,name",
                 "oneCapital,one Capital",
-                "OneCapital,One Capital"
+                "OneCapital,One Capital",
+            "OneCapital111,One Capital111",
+            "OneCapital22,One Capital22"
     })
     void shouldSplitStringByCapitalLettersAndDigits(String input, String expectedResult) {
         SeparateName separateName = new SeparateName(input);
