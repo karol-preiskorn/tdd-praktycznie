@@ -1,11 +1,7 @@
 package com.mkaszynski.tdd.pricing;
 
-
 import lombok.EqualsAndHashCode;
-import lombok.RequiredArgsConstructor;
 
-
-//@RequiredArgsConstructor
 @EqualsAndHashCode
 class Product {
     private final String name;
@@ -23,7 +19,7 @@ class Product {
     }
 
     String name() {
-        return name;
+        return name + " ";
     }
 
     int quantity() {

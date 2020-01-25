@@ -1,12 +1,13 @@
 package com.mkaszynski.tdd.pricing;
 
+import java.util.ArrayList;
 import java.util.List;
 
-public class Promotion3For2 {
+class Promotion3For2 {
 
-    @Override
-    public List<Product> apply(Product product) {
-        Product productsAfterPromotion = new Product();
-        return productsAfterPromotion.asList();
+    List<Product> apply(Product product) {
+        List<Product> products = new ArrayList<>();
+        products.add(product);
+        return products;
     }
 }
