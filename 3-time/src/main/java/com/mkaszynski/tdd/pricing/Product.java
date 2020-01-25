@@ -3,6 +3,10 @@ package com.mkaszynski.tdd.pricing;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
+import java.time.Clock;
+import java.time.LocalTime;
+import java.util.Date;
+
 @ToString
 @EqualsAndHashCode
 class Product {
@@ -40,6 +44,20 @@ class Product {
 
     Product freeProduct(int quantity) {
         return new Product(name, 0, quantity, type);
+    }
+
+    Product HappyProduct(int quantity) {
+        final LocalTime time1 = LocalTime.parse( "20:11:13"  );
+        final LocalTime time2 = LocalTime.parse( "14:49:00" );
+
+        LocalTime nowUtcTime = LocalTime.now(Clock.systemUTC());
+
+        if (nowUtcTime.isAfter(time1) && nowUtcTime.isBefore(time2)){
+            System.out.println(nowUtcTime+" is after: "+ time1+" and before: "+ time2);
+            return new Product(name, price*30/100, quantity, type);
+        }
+
+        return new Product(name, price, quantity, type);
     }
 
     enum Type {
