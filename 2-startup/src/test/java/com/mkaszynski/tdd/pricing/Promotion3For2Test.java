@@ -36,6 +36,14 @@ class Promotion3For2Test {
         assertThat(products).contains(butter(2), discountedButter());
     }
 
+    @DisplayName("Should return two product with same price and one discounted when three product quantity is equal 3")
+    @Test
+    void fourProducts() {
+        List<Product> products = promotion.apply(butter(4));
+
+        assertThat(products).contains(butter(2), discountedButter());
+    }
+
     private Product discountedButter() {
         return new Product("butter", 0, 1);
     }
