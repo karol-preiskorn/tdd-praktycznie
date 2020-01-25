@@ -3,40 +3,45 @@ package com.mkaszynski.tdd.pricing;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-import java.time.Clock;
-import java.time.LocalTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 class PromotionHappyHoursTest {
-    private final PromotionHappyHours promotion = new PromotionHappyHours();
 
+    @DisplayName("Should not apply promotion for FOOD")
     @Test
-    @DisplayName("should return product with 30% price for one product")
-    void happyProduct() {
-        Product product = fullPrice(1);
+    void food() {
+        PromotionHappyHours promotion = promotion();
 
-        List<Product> result = promotion.apply(product);
+        List<Product> result = promotion.apply(butter());
 
-        final LocalTime time1 = LocalTime.parse( "20:11:13"  );
-        final LocalTime time2 = LocalTime.parse( "14:49:00" );
-
-        LocalTime nowUtcTime = LocalTime.now(Clock.systemUTC());
-
-        if (nowUtcTime.isAfter(time1) && nowUtcTime.isBefore(time2)) {
-            System.out.println(nowUtcTime + " is after: " + time1 + " and before: " + time2);
-            assertThat(result).containsOnly(promotionPrice(1));
-        }
-
+        assertThat(result).containsOnly(butter());
     }
 
-    private Product promotionPrice(int quantity) {
-        return new Product("milk", 30, quantity, Product.Type.FOOD);
+    @DisplayName("Should apply promotion for LIQUID")
+    @Test
+    void liquid() {
+        PromotionHappyHours promotion = promotion();
+
+        List<Product> result = promotion.apply(beer());
+
+        assertThat(result).containsOnly(discountedBeer());
     }
 
-    private Product fullPrice(int quantity) {
-        return new Product("milk", 100, quantity, Product.Type.FOOD);
+    private PromotionHappyHours promotion() {
+        return new PromotionHappyHours(new Discount(30));
+    }
+
+    private static Product butter() {
+        return new Product("butter", 220, 1, Product.Type.FOOD);
+    }
+
+    private static Product beer() {
+        return new Product("beer", 1000, 1, Product.Type.LIQUID);
+    }
+
+    private static Product discountedBeer() {
+        return new Product("beer", 700, 1, Product.Type.LIQUID);
     }
 }
